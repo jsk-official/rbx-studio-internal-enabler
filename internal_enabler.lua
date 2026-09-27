@@ -13,7 +13,7 @@ if string_matches ~= nil and lea_matches ~= nil then
           -- I mean, I think it'll survive an update? Hopefully should not change too much
           -- It's not difficult to update this offset anyways
 
-          local RBX_grantInternalPermission = instr - 27 - 320
+          local RBX_grantInternalPermission = instr - 347
           local bytes = readBytes(RBX_grantInternalPermission, 6, true)
 
           if bytes[1] == 72 and bytes[2] == 131 and bytes[3] == 236 and bytes[4] == 40 and bytes[5] == 128 and bytes[6] == 61 then
@@ -24,14 +24,16 @@ if string_matches ~= nil and lea_matches ~= nil then
              %s:
              jmp %s
              ]], string.format("%x", mem), string.format("%x", RBX_grantInternalPermission))
-             local code = autoAssemble(built_code)
-
+             
+             autoAssemble(built_code)
              createRemoteThread(mem)
 
-             print("Done.")
+             print("Done. Close and re-open the current place if nothing happened.")
+          else
+            print("Bytes do not match. Roblox probably broke something.")
           end
        end
    end
 else
-    print("Cannot find matches, do not know how to find RBX::grantInternalPermission")
+    print("Cannot find matches. Roblox probably broke something. Do not know how to find RBX::grantInternalPermission")
 end
