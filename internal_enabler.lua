@@ -24,11 +24,13 @@ if string_matches ~= nil and lea_matches ~= nil then
              %s:
              jmp %s
              ]], string.format("%x", mem), string.format("%x", RBX_grantInternalPermission))
-             
+
              autoAssemble(built_code)
              createRemoteThread(mem)
 
              print("Done. Close and re-open the current place if nothing happened.")
+
+             break
           else
             print("Bytes do not match. Roblox probably broke something.")
           end
